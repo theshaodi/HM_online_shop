@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>商品列表</title>
+		<link rel="stylesheet" href="/web/resources/css/bootstrap.min.css" type="text/css" />
+		<script src="/web/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/web/resources/js/bootstrap.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/web/resources/js/jquery-heima-0.0.1.js" ></script>
+		<script type="text/javascript" src="/web/resources/js/heima-include.js" ></script>
+		<script type="text/javascript" src="/web/resources/js/vue.js"></script>
+		<script type="text/javascript" src="/web/resources/js/product/list.js"></script>
+	</head>
+
+	<body>
+			<div class="container-fluid" id="productList">
+			<div id="header" style="min-height: 130px;"></div>	
+			<div class="container">
+				<div id="product" class="row" style="width:1210px;margin:0 auto;">
+				
+					<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
+				      <a href="/web/view/product/info.html">
+					     <img src="/web/resources/img/loading.gif" width="130" height="130" style="display: inline-block;">
+				      </a>
+				      <p>
+				        <a href="/web/view/product/info.html" style='color:#666'>大西瓜</a>
+				      </p>
+				      <p><font color="#E4393C" style="font-size:16px">&yen;666</font></p>
+		            </div>
+		     	  
+		     	   <!--
+		     	   <template v-for="product in pageBean.list">
+		     	   		<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
+				      <a :href="'/web/view/product/info.html?pid='+product.pid">
+					     <img :src="'/web/'+product.pimage" width="130" height="130" style="display: inline-block;">
+				      </a>
+				      <p>
+				        <a :href="'/web/view/product/info.html?pid='+product.pid" style='color:#666'>{{product.pname}}</a>
+				      </p>
+				      <p><font color="#E4393C" style="font-size:16px">&yen;{{product.shop_price}}</font></p>
+		            </div>
+		     	   </template>
+		     	   -->
+				</div>
+		
+				<!--分页 -->
+				<div style="width:380px;margin:0 auto;margin-top:50px;">
+					<ul id="page" class="pagination" style="text-align:center; margin-top:10px;">
+						
+						<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">6</a></li>
+						<li><a href="#">7</a></li>
+						<li><a href="#">8</a></li>
+						<li><a href="#">9</a></li>
+						<li>
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+				<!-- 分页结束=======================        -->
+		
+				<!--
+		       		商品浏览记录:
+		        -->
+				<div style="width:1210px;margin:0 auto; padding: 0 9px;border: 1px solid #ddd;border-top: 2px solid #999;height: 246px;">
+		
+					<h4 style="width: 50%;float: left;font: 14px/30px ">浏览记录</h4>
+					<div style="width: 50%;float: right;text-align: right;"><a href="">more</a></div>
+					<div style="clear: both;"></div>
+		
+					<div style="overflow: hidden;">
+		
+						<ul style="list-style: none;">
+							<li style="width: 150px;height: 216;float: left;margin: 0 8px 0 0;padding: 0 18px 15px;text-align: center;"><img src="/web/resources/products/1/cs10001.jpg" width="130px" height="130px" /></li>
+						</ul>
+		
+					</div>
+				</div>
+			</div>
+			<div id="footer"  style="min-height: 203px;"></div>
+		</div>
+	</body>
+
+</html>
