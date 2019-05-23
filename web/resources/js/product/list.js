@@ -1,5 +1,5 @@
 $(function(){
-	var productList = new Vue({
+	var vueProductList = new Vue({
 		el:"#productList",
 		data:{
 			pageBean:{				// 分页对象
@@ -23,10 +23,19 @@ $(function(){
 		methods:{
 			initProductListData(){
 				var cid = HM.getParameter("cid");
+				var currentPage = HM.getParameter("currentPage");
+				if(currentPage == null){
+					currentPage = "1";
+				}
 				if(cid != null){
-					HM.ajax("/product","method=getProductListById&cid="+cid,function (data,status,xhr){
+					var params = "method=getProductListById&cid="+cid+"&currentPage="+currentPage;
+					HM.ajax("/product",params,function (data,status,xhr){
 						if(data.code == 1){
-							console.log(data);
+							console.log(data.obj);
+							vueProductList.pageBean = data.obj;
+							console.log(cid);
+							$("#page").html(HM.page(data.obj,"/web/view/product/list.html?cid="+cid));
+							
 						}else{
 							console.log(data.message);
 						}

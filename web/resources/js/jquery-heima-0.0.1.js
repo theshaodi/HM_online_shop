@@ -112,7 +112,7 @@ var HM=
 			
 			if(url.indexOf("?") != -1){
 				//带参数
-				
+				console.log(url);
 			}else{
 				//不带参数
 				url+="?_t="+new Date().getTime();

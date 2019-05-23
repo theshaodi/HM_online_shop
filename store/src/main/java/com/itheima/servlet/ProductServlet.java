@@ -37,6 +37,7 @@ public class ProductServlet extends BaseServlet{
     public void getProductListById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cid = request.getParameter("cid");
         String currentPage = request.getParameter("currentPage");
+        System.out.println(currentPage);
         if(currentPage == null || "".equals(currentPage) || "null".equalsIgnoreCase(currentPage))
             currentPage = "1";
 
