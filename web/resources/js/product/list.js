@@ -22,7 +22,16 @@ $(function(){
 		},
 		methods:{
 			initProductListData(){
-				console.log("product list init....");
+				var cid = HM.getParameter("cid");
+				if(cid != null){
+					HM.ajax("/product","method=getProductListById&cid="+cid,function (data,status,xhr){
+						if(data.code == 1){
+							console.log(data);
+						}else{
+							console.log(data.message);
+						}
+					})
+				}
 			}
 		},
 		mounted:function(){

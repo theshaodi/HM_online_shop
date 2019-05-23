@@ -16,4 +16,6 @@ public interface ProductDao {
     List<Product> findHostProducts() throws SQLException;
     List<Product> findNewProducts() throws SQLException;
     Product findProductById(String pid) throws SQLException;
+    List<Product> getProductListById(String cid,int currentPage,int pageSize) throws SQLException;
+    long totalCountByCid(String cid) throws SQLException;
 }

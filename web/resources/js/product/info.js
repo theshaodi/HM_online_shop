@@ -17,7 +17,11 @@ $(function(){
 				var pid = HM.getParameter("pid");
 				if(pid != null){
 					HM.ajax("/product","method=findProductById&pid="+pid,function (data,status,xhr){
-						vueProduct.product = data.obj;
+						if(data.code == 1){
+							vueProduct.product = data.obj;
+						}else{
+							console.log(data.message);
+						}
 					})
 				}
 			},
