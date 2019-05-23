@@ -21,6 +21,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
     private QueryRunner QR = new QueryRunner(C3P0Utils.getDataSource());
 
+
     @Override
     public List<Category> findAll() throws SQLException {
         String sql = "select * from category";

@@ -23,6 +23,13 @@ import java.util.List;
 public class CategoryServlet extends BaseServlet {
     private CategoryService CS = BeanFactory.newInstance(CategoryService.class);
 
+    /**
+     * 查询所有的商品分类
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Category> categoryList = CS.findAll();

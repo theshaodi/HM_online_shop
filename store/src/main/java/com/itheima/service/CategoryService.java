@@ -12,5 +12,10 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface CategoryService {
+
+    /**
+     * 查询所有的商品分类
+     * @return type List(Category)
+     */
     List<Category> findAll();
 }

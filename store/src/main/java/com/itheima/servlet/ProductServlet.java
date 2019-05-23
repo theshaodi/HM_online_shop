@@ -19,7 +19,8 @@ import java.util.List;
  * @Project: com.itheima.servlet
  * @Author: ShaoDi Wang
  * @Date: Created in 2019-05-23 17:08
- * @Description: 产品Servlet
+ * @Description: 产品Servlet,功能包括但不限于根据商品类别分页查询，
+ *       按商品pid查询
  * @Version: 1.0
  */
 @WebServlet(urlPatterns = "/product")
@@ -37,7 +38,6 @@ public class ProductServlet extends BaseServlet{
     public void getProductListById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cid = request.getParameter("cid");
         String currentPage = request.getParameter("currentPage");
-        System.out.println(currentPage);
         if(currentPage == null || "".equals(currentPage) || "null".equalsIgnoreCase(currentPage))
             currentPage = "1";
 

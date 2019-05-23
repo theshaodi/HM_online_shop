@@ -13,5 +13,11 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface CategoryDao {
+
+    /**
+     * 查询所有的商品分类
+     * @return type List(Category)
+     * @throws SQLException
+     */
     List<Category> findAll() throws SQLException;
 }

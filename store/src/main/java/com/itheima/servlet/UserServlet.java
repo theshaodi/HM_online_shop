@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
+/**
+* @Author: ShaoDi Wang
+* @Date: Created in 2019-05-23 21:55
+* @Description: 有关于用户相关操作的类，包括但不限于注册，登陆，登出操作
+* @Version: 1.0
+*/
 
 @WebServlet(urlPatterns = "/user")
 public class UserServlet extends BaseServlet {
