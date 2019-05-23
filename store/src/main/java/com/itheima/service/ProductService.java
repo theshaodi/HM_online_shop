@@ -14,4 +14,5 @@ import java.util.List;
 public interface ProductService {
     List<Product> findHostProducts();
     List<Product> findNewProducts();
+    Product findProductById(String pid);
 }

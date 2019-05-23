@@ -15,4 +15,5 @@ import java.util.List;
 public interface ProductDao {
     List<Product> findHostProducts() throws SQLException;
     List<Product> findNewProducts() throws SQLException;
+    Product findProductById(String pid) throws SQLException;
 }

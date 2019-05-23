@@ -4,6 +4,7 @@ import com.itheima.dao.ProductDao;
 import com.itheima.domain.Product;
 import com.itheima.utils.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.SQLException;
@@ -30,5 +31,14 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> findNewProducts() throws SQLException {
         String sql = "select * from product order by pdate desc limit 0,9;";
         return QR.query(sql,new BeanListHandler<>(Product.class));
+    }
+
+    @Override
+    public Product findProductById(String pid) throws SQLException {
+        String sql = "select * from product where pid = ?";
+        Object[] params = {
+                pid
+        };
+        return QR.query(sql,new BeanHandler<>(Product.class),params);
     }
 }

@@ -14,7 +14,12 @@ $(function(){
 		},
 		methods:{
 			initProductData(){
-				console.log("info init....");
+				var pid = HM.getParameter("pid");
+				if(pid != null){
+					HM.ajax("/product","method=findProductById&pid="+pid,function (data,status,xhr){
+						vueProduct.product = data.obj;
+					})
+				}
 			},
 			addCart(){
 				console.log("info add cart....");

@@ -25,6 +25,17 @@ public class ProductServlet extends BaseServlet{
 
     private ProductService PS = BeanFactory.newInstance(ProductService.class);
 
+    public void findProductById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pid = request.getParameter("pid");
+
+        Product product = PS.findProductById(pid);
+
+        if(product != null)
+            printResult(Result.SUCCESS,"获取到商品详情信息",product,response);
+        else
+            printResult(Result.FAILS,"未获取到商品信息",response);
+    }
+
     public void findHostAndNewProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Product> hostProducts = PS.findHostProducts();

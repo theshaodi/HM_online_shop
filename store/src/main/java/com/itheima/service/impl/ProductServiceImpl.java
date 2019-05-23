@@ -38,4 +38,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public Product findProductById(String pid) {
+        try {
+            return PD.findProductById(pid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
