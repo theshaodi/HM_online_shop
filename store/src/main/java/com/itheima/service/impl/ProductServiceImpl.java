@@ -5,6 +5,7 @@ import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 import com.itheima.utils.BeanFactory;
+import com.itheima.utils.C3P0Utils;
 
 import java.sql.SQLException;
 import java.util.List;

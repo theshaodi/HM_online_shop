@@ -21,6 +21,20 @@ public class C3P0Utils {
 		return dataSource.getConnection();
 	}
 
+	public static Connection getThreadLocalConnection(ThreadLocal<Connection> TLC){
+		Connection conn = TLC.get();
+		if(conn == null){
+			try {
+				conn = C3P0Utils.getConnection();
+				TLC.set(conn);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return TLC.get();
+	}
+
 	public static void close(ResultSet rs,Statement stat,Connection con){
 		if(rs!=null)
 			try {

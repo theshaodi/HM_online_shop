@@ -47,8 +47,19 @@ $(function(){
 
 			// 提交订单
 			submitOrder(){
-				// 跳转到订单列表页面
-			    location.href = "/web/view/order/list.html";
+				HM.ajax("/order","method=submitOrder",function (data,status,xhr){
+					if(data.code == 1){
+						console.log(data);
+						// 跳转到订单列表页面
+				    location.href = "/web/view/order/list.html";
+					}else if(data.code == 2){
+						alert(data.message);
+						location.href = "/web/login.html";
+					}else{
+						alert(data.message);
+						location.reload();
+					}
+				})
 			}
 		},
 		mounted:function(){
