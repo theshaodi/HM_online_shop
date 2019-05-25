@@ -20,7 +20,6 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
 
     private QueryRunner QR = new QueryRunner(C3P0Utils.getDataSource());
-    private QueryRunner SQR = new QueryRunner();
 
     @Override
     public void saveOrders(Orders orders) throws SQLException {
@@ -58,7 +57,7 @@ public class OrderDaoImpl implements OrderDao {
                 orders.getTotal(),
                 orders.getState()
         };
-        SQR.update(conn,sql,params);
+        QR.update(conn,sql,params);
     }
 
     @Override
@@ -70,6 +69,6 @@ public class OrderDaoImpl implements OrderDao {
                 orderItem.getSubTotal(),
                 orderItem.getCount()
         };
-        SQR.update(conn,sql,params);
+        QR.update(conn,sql,params);
     }
 }

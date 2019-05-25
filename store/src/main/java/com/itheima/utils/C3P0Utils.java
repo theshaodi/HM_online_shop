@@ -21,6 +21,11 @@ public class C3P0Utils {
 		return dataSource.getConnection();
 	}
 
+	/**
+	 * ThreadLocal<Connection>方面的引用
+	 * @param TLC
+	 * @return
+	 */
 	public static Connection getThreadLocalConnection(ThreadLocal<Connection> TLC){
 		Connection conn = TLC.get();
 		if(conn == null){

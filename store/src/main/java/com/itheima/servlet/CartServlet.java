@@ -57,6 +57,9 @@ public class CartServlet extends BaseServlet{
 
         String pid = request.getParameter("pid");
 
+        if(pid == null)
+            printResult(Result.FAILS,"pid没获取到",response);
+
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         if(cart == null){
             printResult(Result.FAILS,"购物车里没东西,快去购物",response);
@@ -118,7 +121,6 @@ public class CartServlet extends BaseServlet{
             ssion.setAttribute("cart",cart);
         }
         cart.addCart(cartItem);
-        System.out.println(cart);
 
         printResult(Result.SUCCESS,"购物车商品添加成功",response);
 

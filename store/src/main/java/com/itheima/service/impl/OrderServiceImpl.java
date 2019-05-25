@@ -86,6 +86,14 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
+        if(conn != null) {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         return isSuccess;
     }
 }

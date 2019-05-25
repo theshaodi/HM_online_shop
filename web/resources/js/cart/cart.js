@@ -8,19 +8,18 @@ $(function(){
 		methods:{
 			initCartData(){
 				HM.ajax("/cart","method=getCart",function (data,status,xhr){
-					console.log(data);
 					if(data.code == 1){
 						vueCart.cartItemMap = data.obj.cartItemMap;
 						vueCart.total = data.obj.total;
 					}else{
 						console.log(data.message);
+						// location.href = "/web/index.html";
 					}
 				})
 
 			},
 			// 移除购物项
 			removeItem(pid){
-			    console.log(pid);
 			    if(confirm("确定要删除吗?")){
 						HM.ajax("/cart","method=removeCartItem&pid="+pid, function (data,status,xhr){
 							if(data.code == 1){
