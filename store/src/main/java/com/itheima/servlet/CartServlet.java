@@ -28,6 +28,44 @@ public class CartServlet extends BaseServlet{
 
 
     /**
+     * 清空购物车数据
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void clearCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        if(cart == null){
+            printResult(Result.FAILS,"购物车里没东西,快去购物",response);
+            return;
+        }
+        cart.clearCart();
+        printResult(Result.SUCCESS,"成功清空购物车",response);
+
+
+    }
+    /**
+     * 成功通过pid删除购物车中数据
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void removeCartItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String pid = request.getParameter("pid");
+
+        Cart cart = (Cart) request.getSession().getAttribute("cart");
+        if(cart == null){
+            printResult(Result.FAILS,"购物车里没东西,快去购物",response);
+            return;
+        }
+        cart.removeCart(pid);
+        printResult(Result.SUCCESS,"成功通过pid删除购物车中数据",response);
+    }
+    /**
      * 获取session中的购物车数据
      * @param request
      * @param response
