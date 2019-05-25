@@ -19,7 +19,7 @@
 	<body>
 		<div class="container-fluid" id="cartContent" >
 			<!--头部-->
-			<div id="header" style="min-height: 130px;"></div>	
+			<div id="header" style="min-height: 130px;"></div>
 			<div class="container" style="min-height: 441px;">
 				<div class="row">
 					<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -34,8 +34,8 @@
 									<th>小计</th>
 									<th>操作</th>
 								</tr>
-								
-								<tr class="active">
+
+								<!-- <tr class="active">
 									<td width="60" width="40%">
 										<input type="hidden" name="id" value="22">
 										<img src="/web/resources/products/1/donggua1.jpg" width="70" height="60">
@@ -55,9 +55,9 @@
 									<td>
 										<a href="javascript:;" class="delete" @click="removeItem(1)">删除</a>
 									</td>
-								</tr>
-								
-								<!--
+								</tr> -->
+
+
 								<template v-for="cartItem in cartItemMap">
 									<tr class="active">
 										<td width="60" width="40%">
@@ -81,12 +81,12 @@
 										</td>
 									</tr>
 								</template>
-								-->
+
 							</tbody>
 						</table>
 					</div>
 				</div>
-	
+
 				<div style="margin-right:130px;">
 					<div style="text-align:right;">
 						商品金额: <strong style="color:#ff6600;"><span id="total">￥{{total}}元</span></strong>

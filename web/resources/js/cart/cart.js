@@ -32,8 +32,12 @@ $(function(){
 		},
 		methods:{
 			initCartData(){
-				console.log("initCartData...");
-				
+				HM.ajax("/cart","method=getCart",function (data,status,xhr){
+					console.log(data);
+					vueCart.cartItemMap = data.obj.cartItemMap;
+					vueCart.total = data.obj.total;
+				})
+
 			},
 			// 移除购物项
 			removeItem(pid){
@@ -41,14 +45,14 @@ $(function(){
 			    if(confirm("确定要删除吗?")){
 			    }
 			},
-			
+
 			//清空购物车按钮添加事件
 			clearItem(){
 			    if(confirm("确定要清空吗?")){
 			        // 发送ajax请求
 			    }
 			},
-			
+
 			// 提交订单
 			submitOrder(){
 				// 跳转到订单列表页面

@@ -27,12 +27,23 @@ $(function(){
 			},
 			addCart(){
 				console.log("info add cart....");
-				location.href = "/web/view/cart/list.html";
+				var pid = HM.getParameter("pid");
+				var count = $("#quantity").val();
+				if(pid != null){
+					HM.ajax("/cart","method=addCart&pid="+pid+"&count="+count,function (data,status,xhr){
+						if(data.code==1){
+							location.href = "/web/view/cart/list.html";
+						}else{
+							console.log(data.message);
+						}
+					})
+				}
+
 			}
 		},
 		mounted:function(){
-			this.initProductData();	
+			this.initProductData();
 		}
 	});
-	
+
 });
