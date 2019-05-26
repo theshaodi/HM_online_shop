@@ -1,6 +1,10 @@
 package com.itheima.alipay;
 
 
+import com.itheima.common.OrderConst;
+import com.itheima.service.OrderService;
+import com.itheima.service.impl.OrderServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +27,10 @@ public class AlipayWebReturn extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*
         if(AlipayWebPay.signVerified(request.getParameterMap())) {
             //商户订单号
             String out_trade_no = request.getParameter("out_trade_no");
+            System.out.println(out_trade_no);
             //订单状态,修改为已经付款,正式上线，改为在AlipayWebNotify中完成
             OrderService orderService = new OrderServiceImpl();
             if(orderService.updateOrdersStateById(out_trade_no, OrderConst.PAID)){
@@ -41,6 +45,5 @@ public class AlipayWebReturn extends HttpServlet {
             response.getWriter().println("验签失败");
             System.out.println("AlipayWebReturn 失败");
         }
-        */
     }
 }

@@ -25,6 +25,16 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderDao OD = BeanFactory.newInstance(OrderDao.class);
 
+    public boolean updateOrdersStateById(String oid,int payState){
+        try {
+            OD.updateOrdersStateById(oid,payState);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * 向数据库中存入某个用户的订单对象
      * @param orders 根据购物车数据生成的订单对象Orders
@@ -126,5 +136,24 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return null;
+    }
+
+    @Override
+    public Orders getOrdersByOid(String oid) {
+        try {
+            return OD.getOrdersByOid(oid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updateOrdersNameAddrTel(String oid, String name, String addr, String tel) {
+        try {
+            OD.updateOrdersNameAddrTel(oid,name,addr,tel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

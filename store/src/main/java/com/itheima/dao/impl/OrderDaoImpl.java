@@ -10,6 +10,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -119,5 +120,25 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderItemView> orderItems = QR.query(sql2, new BeanListHandler<>(OrderItemView.class), params2);
         orders.setOrderViewList(orderItems);
         return orders;
+    }
+
+    @Override
+    public void updateOrdersNameAddrTel(String oid, String name, String addr, String tel) throws SQLException {
+
+        String sql = "update orders set name=?, address=?, telephone=? where oid=?";
+        Object[] params = {
+                name,
+                addr,
+                tel,
+                oid
+        };
+        QR.update(sql,params);
+    }
+
+    @Override
+    public void updateOrdersStateById(String oid, int payState) throws SQLException {
+        String sql = "update orders set state = ? where oid = ?";
+        Object[] params = {payState,oid};
+        QR.update(sql,params);
     }
 }

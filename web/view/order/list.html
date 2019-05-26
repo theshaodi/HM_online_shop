@@ -107,7 +107,7 @@
 												<img :src="'/web/'+orderView.pimage" width="70" height="60">
 											</td>
 											<td width="30%">
-												<a target="_blank">{{orderView.pname}}</a>
+												<a :href="'/web/view/product/info.html?pid='+orderView.pid" target="_blank">{{orderView.pname}}</a>
 											</td>
 											<td width="20%">
 												￥{{orderView.shop_price}}
@@ -121,7 +121,7 @@
 										</tr>
 									</template>
 								</template>
-								
+
 							</tbody>
 						</table>
 					</div>

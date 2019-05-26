@@ -64,6 +64,9 @@ $(function(){
 						vueOrderList.pageBean = data.obj;
 						var splitPage = HM.page(data.obj,"/web/view/order/list.html");
 						$("#page").html(splitPage);
+					}else if(data.code == 2){
+						alert(data.message);
+						location.href="/web/login.html";
 					}else{
 						alert(data.message);
 					}

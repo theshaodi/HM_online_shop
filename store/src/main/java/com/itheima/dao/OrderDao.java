@@ -27,4 +27,8 @@ public interface OrderDao {
     // 查询订单详情
     Orders getOrdersByOid(String oid) throws SQLException;
 
+    // 确认订单后更新补充数据库中订单的收货人信息
+    void updateOrdersNameAddrTel(String oid, String name, String addr, String tel) throws SQLException;
+
+    void updateOrdersStateById(String oid,int payState) throws SQLException;
 }

@@ -1,5 +1,6 @@
 package com.itheima.servlet;
 
+import com.itheima.alipay.AlipayWebPay;
 import com.itheima.common.OrderConst;
 import com.itheima.domain.*;
 import com.itheima.service.OrderService;
@@ -12,18 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Project: com.itheima.servlet
  * @Author: ShaoDi Wang
  * @Date: Created in 2019-05-25 19:22
- * @Description:
+ * @Description: 用来处理订单方面请求的类
  * @Version: 1.0
  */
 @WebServlet(urlPatterns = "/order")
@@ -31,7 +29,63 @@ public class OrderServlet extends BaseServlet{
 
     private OrderService OS = BeanFactory.newInstance(OrderService.class);
 
+    public void pay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String telephone = request.getParameter("telephone");
+        String oid = request.getParameter("oid");
+        System.out.println(oid);
+        System.out.println(name);
+        System.out.println(address);
+        System.out.println(telephone);
+
+        OS.updateOrdersNameAddrTel(oid,name,address,telephone);
+        String webPayBody = null;
+        try {
+            webPayBody = AlipayWebPay.getWebPayBody(oid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(webPayBody != null){
+            printResult(Result.SUCCESS,"更新订单收货人信息，成功生成支付页面信息",webPayBody,response);
+        }else{
+            printResult(Result.FAILS,"生成支付页面失败",response);
+        }
+    }
+
+    /**
+     * 通过订单id查询订单信息
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void getOrdersByOid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // 判断用户是否登陆
+        User user = (User)request.getSession().getAttribute("user");
+        if(user == null){
+            printResult(Result.NOLOGIN, "没登陆是不能下订单的哟", response);
+            return;
+        }
+
+        String oid = request.getParameter("oid");
+        Orders orders = OS.getOrdersByOid(oid);
+        if(orders.getState() == OrderConst.UN_PAID){
+            AlipayWebPay.queryTrade(orders.getOid(),"");
+        }
+
+        printResult(Result.SUCCESS,"订单详情查询成功",orders,response);
+    }
+
+    /**
+     * 通过用户id获取该用户的所有订单列表
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void getOrdersListByUid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // 判断用户是否登陆

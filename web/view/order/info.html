@@ -12,16 +12,16 @@
 		<script type="text/javascript" src="/web/resources/js/heima-include.js" ></script>
 		<script type="text/javascript" src="/web/resources/js/vue.js" ></script>
 		<script type="text/javascript" src="/web/resources/js/order/info.js" ></script>
-		
+
 	</head>
 
 	<body>
 			<div id="payResult">
-			
+
 			</div>
 			<div class="container-fluid" id="orderInfoContent">
 				<!--头部-->
-				<div id="header" style="min-height: 130px;"></div>	
+				<div id="header" style="min-height: 130px;"></div>
 				<div class="container">
 					<div class="row">
 						<div style="margin:0 auto;margin-top:10px;width:950px;">
@@ -49,7 +49,7 @@
 												<img :src="'/web/'+orderView.pimage" width="70" height="60">
 											</td>
 											<td width="30%">
-												<a target="_blank">{{orderView.pname}}</a>
+												<a :href="'/web/view/product/info.html?pid='+orderView.pid" target="_blank" >{{orderView.pname}}</a>
 											</td>
 											<td width="20%">
 												￥{{orderView.shop_price}}
@@ -65,13 +65,13 @@
 								</tbody>
 							</table>
 						</div>
-		
+
 						<div style="text-align:right;margin-right:120px;">
 							商品金额: <strong style="color:#ff6600;">￥<span id="total">{{order.total}}</span>元</strong>
 						</div>
-		
+
 					</div>
-		
+
 					<div class="">
 						<hr/>
 						<form id="orderForm" class="form-horizontal" style="margin-top:5px;margin-left:150px;">
@@ -94,10 +94,10 @@
 									<input type="text" name="telephone" class="form-control" id="telephone" placeholder="请输入联系方式">
 								</div>
 							</div>
-						
-		
+
+
 							<hr/>
-		
+
 							<div style="margin-top:5px;margin-left:150px;">
 							<strong>选择银行：</strong>
 							<p>
@@ -122,7 +122,7 @@
 								<img src="/web/resources/bank_img/guangda.bmp" align="middle" />&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="radio" name="pd_FrpId" value="CMBCHINA-NET-B2C" />招商银行
 								<img src="/web/resources/bank_img/cmb.bmp" align="middle" />
-		
+
 							</p>
 							<P><br/></P>
 							<strong>选择支付宝：</strong>
@@ -131,9 +131,9 @@
 								<input type="radio" name="pd_FrpId" value="alipay" checked="checked"/>
 								<img src="/web/resources/bank_img/alipay.png" align="middle" />&nbsp;&nbsp;&nbsp;&nbsp;
 							<hr/>
-								
+
 							</p>
-							
+
 							<p style="text-align:right;margin-right:100px;">
 								<a href="#" @click="pay()">
 									<img src="/web/resources/img/finalbutton.gif" width="204" height="51" border="0" />
@@ -143,12 +143,12 @@
 						</div>
 						</form>
 					</div>
-		
+
 				</div>
 				<!--尾部-->
 				<div id="footer"  style="min-height: 203px;"></div>
 		</div>
-		
+
 	</body>
 
 </html>

@@ -22,4 +22,10 @@ public interface OrderService {
     PageBean<Orders> getPageBeanByUid(String uid,int currentPage,int pageSize);
 
     // 订单详情查询
+    Orders getOrdersByOid(String Oid);
+
+    // 确认订单后更新补充数据库中订单的收货人信息
+    void updateOrdersNameAddrTel(String oid,String name,String addr,String tel);
+
+    public boolean updateOrdersStateById(String oid,int payState);
 }

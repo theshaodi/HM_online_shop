@@ -1,5 +1,18 @@
 package com.itheima.alipay;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.itheima.common.OrderConst;
+import com.itheima.service.OrderService;
+import com.itheima.service.impl.OrderServiceImpl;
+import net.sf.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -50,8 +63,7 @@ public class AlipayWebPay{
      * @throws Exception
      */
     public  static String getWebPayBody(String out_trade_no) throws Exception {
-        return "";
-        /*
+//        return "";
         // 获得初始化的AlipayClient
 		// 向阿里支付接口发送任何请求（支付请求、查询交易状态请求）时必须构建的对象。
         AlipayClient alipayClient = new DefaultAlipayClient(gatewayUrl, app_id, merchant_private_key, "json", charset, alipay_public_key, sign_type);
@@ -74,7 +86,6 @@ public class AlipayWebPay{
         String  result= alipayClient.pageExecute(alipayRequest).getBody();
         System.out.println(result);
         return result;
-        */
     }
     /**
      * 数据验证
@@ -82,8 +93,6 @@ public class AlipayWebPay{
      * @return
      */
     public static boolean signVerified(Map<String,String[]> requestParams){
-        return false;
-        /*
         boolean isSignVerified = false;
         //获取支付宝POST过来反馈信息
         Map<String,String> params = new HashMap<String,String>();
@@ -106,7 +115,6 @@ public class AlipayWebPay{
             e.printStackTrace();
         }
         return isSignVerified;
-        */
     }
 
     /**
@@ -115,7 +123,6 @@ public class AlipayWebPay{
      * @param trade_no 支付宝交易ID
      */
     public static void queryTrade(String out_trade_no,String trade_no) {
-        /*
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(gatewayUrl, app_id, merchant_private_key, "json", charset, alipay_public_key, sign_type);
         // 构建查询订单状态的请求对象
@@ -145,6 +152,5 @@ public class AlipayWebPay{
         }catch(Exception e){
             e.printStackTrace();
         }
-        */
     }
 }
