@@ -1,6 +1,5 @@
 package com.itheima.servlet;
 
-import com.google.gson.Gson;
 import com.itheima.domain.User;
 import com.itheima.service.UserService;
 import com.itheima.utils.BeanFactory;

@@ -19,4 +19,12 @@ public interface OrderDao {
     void saveOrderItem(OrderItem orderItem) throws SQLException;
     void saveOrders(Connection conn, Orders orders) throws SQLException;
     void saveOrderItem(Connection conn, OrderItem orderItem) throws SQLException;
+
+    // 查询订单列表
+    Long getOrderCountByUid(String uid) throws SQLException;
+    List<Orders> getOrdersByUid(String uid, int currentPage, int pageSize) throws SQLException;
+
+    // 查询订单详情
+    Orders getOrdersByOid(String oid) throws SQLException;
+
 }

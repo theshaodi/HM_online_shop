@@ -19,15 +19,15 @@
 
 	<body>
 		<div class="container-fluid" id="orderListContent">
-			<div id="header" style="min-height: 130px;"></div>	
+			<div id="header" style="min-height: 130px;"></div>
 			<div class="container">
 				<div class="row">
 					<div style="margin:0 auto; margin-top:10px;width:950px;">
 						<strong>我的订单</strong>
 						<table class="table table-bordered" >
 							<tbody id="orders">
-								
-								<tr class="success">
+
+								<!-- <tr class="success">
 									<th colspan="2">
 										订单编号:
 										<a href="info.html?oid=7766771234">
@@ -79,9 +79,9 @@
 									<td width="15%">
 										<span class="subtotal">￥1596.00</span>
 									</td>
-								</tr>
-							
-								<!--
+								</tr> -->
+
+
 								<template v-for="order in pageBean.list">
 									<tr class="success">
 									<th colspan="2">
@@ -121,14 +121,14 @@
 										</tr>
 									</template>
 								</template>
-								-->
+								
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div style="text-align: center;">
 					<ul class="pagination" id="page">
-						
+
 						<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 						<li class="active"><a href="#">1</a></li>
 						<li><a href="#">2</a></li>
@@ -144,7 +144,7 @@
 								<span aria-hidden="true">&raquo;</span>
 							</a>
 						</li>
-					
+
 					</ul>
 				</div>
 			</div>

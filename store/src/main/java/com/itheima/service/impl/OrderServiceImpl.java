@@ -3,9 +3,12 @@ package com.itheima.service.impl;
 import com.itheima.dao.OrderDao;
 import com.itheima.domain.OrderItem;
 import com.itheima.domain.Orders;
+import com.itheima.domain.PageBean;
 import com.itheima.service.OrderService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.C3P0Utils;
+import com.sun.tools.corba.se.idl.constExpr.Or;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +24,6 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private OrderDao OD = BeanFactory.newInstance(OrderDao.class);
-    private ThreadLocal<Connection> TLC = new ThreadLocal<>();
 
     /**
      * 向数据库中存入某个用户的订单对象
@@ -66,7 +68,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public boolean saveOrdersAndOrderItems(Orders orders, List<OrderItem> orderItems) {
-        Connection conn = C3P0Utils.getThreadLocalConnection(TLC);
+
+        Connection conn = C3P0Utils.getThreadLocalConnection();
 
         boolean isSuccess = false;
         try {
@@ -95,5 +98,33 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return isSuccess;
+    }
+
+    /**
+     * 通过用户id，分页查询并返回该用户订单列表的pageBean
+     * @param uid 用户id
+     * @param currentPage 前端传来的当前页码，默认为1
+     * @param pageSize 每页展示的订单数
+     * @return type PageBean<Orders>
+     */
+    @Override
+    public PageBean<Orders> getPageBeanByUid(String uid, int currentPage, int pageSize) {
+        PageBean<Orders> opb = new PageBean<>();
+
+        try {
+            Long orderCountByUid = OD.getOrderCountByUid(uid);
+            List<Orders> ordersByUid = OD.getOrdersByUid(uid, currentPage, pageSize);
+            int totalPage = (int)Math.ceil(((double)orderCountByUid)/pageSize);
+            opb.setCurrentPage(currentPage);
+            opb.setPageSize(pageSize);
+            opb.setList(ordersByUid);
+            opb.setTotalCount(orderCountByUid);
+            opb.setTotalPage(totalPage);
+            return opb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

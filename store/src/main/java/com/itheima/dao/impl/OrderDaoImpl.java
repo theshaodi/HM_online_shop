@@ -2,9 +2,13 @@ package com.itheima.dao.impl;
 
 import com.itheima.dao.OrderDao;
 import com.itheima.domain.OrderItem;
+import com.itheima.domain.OrderItemView;
 import com.itheima.domain.Orders;
 import com.itheima.utils.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -70,5 +74,50 @@ public class OrderDaoImpl implements OrderDao {
                 orderItem.getCount()
         };
         QR.update(conn,sql,params);
+    }
+
+    @Override
+    public Long getOrderCountByUid(String uid) throws SQLException {
+        String sql = "select count(*) from orders where uid = ?";
+        Object[] params = {
+                uid
+        };
+        return QR.query(sql,new ScalarHandler<>(),params);
+    }
+
+    @Override
+    public List<Orders> getOrdersByUid(String uid, int currentPage, int pageSize) throws SQLException {
+        String sql = "select * from orders where uid = ? limit ?,?";
+        Object[] params = {
+                uid,
+                (currentPage - 1)*pageSize,
+                pageSize
+        };
+        List<Orders> ordersList = QR.query(sql, new BeanListHandler<>(Orders.class), params);
+        for (Orders orders : ordersList) {
+            String sql2 = "select p.pid,p.pname,p.pimage,p.shop_price,o.count,o.subtotal from orderitem as o,product as p where o.pid = p.pid and oid = ?";
+            Object[] params2 = {
+                    orders.getOid()
+            };
+            List<OrderItemView> orderItems = QR.query(sql2, new BeanListHandler<>(OrderItemView.class), params2);
+            orders.setOrderViewList(orderItems);
+        }
+        return ordersList;
+    }
+
+    @Override
+    public Orders getOrdersByOid(String oid) throws SQLException {
+        String sql = "select * from orders where oid = ?";
+        Object[] params = {
+                oid
+        };
+        Orders orders = QR.query(sql, new BeanHandler<>(Orders.class), params);
+        String sql2 = "select p.pid,p.pname,p.pimage,p.shop_price,o.count,o.subtotal from orderitem as o,product as p where o.pid = p.pid and oid = ?";
+        Object[] params2 = {
+                orders.getOid()
+        };
+        List<OrderItemView> orderItems = QR.query(sql2, new BeanListHandler<>(OrderItemView.class), params2);
+        orders.setOrderViewList(orderItems);
+        return orders;
     }
 }

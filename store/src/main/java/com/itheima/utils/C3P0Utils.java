@@ -23,10 +23,10 @@ public class C3P0Utils {
 
 	/**
 	 * ThreadLocal<Connection>方面的引用
-	 * @param TLC
 	 * @return
 	 */
-	public static Connection getThreadLocalConnection(ThreadLocal<Connection> TLC){
+	public static Connection getThreadLocalConnection(){
+		ThreadLocal<Connection> TLC = new ThreadLocal<>();
 		Connection conn = TLC.get();
 		if(conn == null){
 			try {

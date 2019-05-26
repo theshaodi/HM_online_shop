@@ -31,6 +31,29 @@ public class OrderServlet extends BaseServlet{
 
     private OrderService OS = BeanFactory.newInstance(OrderService.class);
 
+
+    public void getOrdersListByUid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // 判断用户是否登陆
+        User user = (User)request.getSession().getAttribute("user");
+        if(user == null){
+            printResult(Result.NOLOGIN, "没登陆是不能下订单的哟", response);
+            return;
+        }
+
+        String currentPage = request.getParameter("currentPage");
+        if(currentPage == null || "".equals(currentPage) || "null".equals(currentPage))
+            currentPage = "1";
+
+        PageBean<Orders> pbByUid = OS.getPageBeanByUid(user.getUid(), Integer.parseInt(currentPage), OrderConst.PAGE_SIZE);
+
+        if(pbByUid != null ){
+            printResult(Result.SUCCESS,"订单分页查询成功",pbByUid,response);
+        }else{
+            printResult(Result.FAILS,"订单分页查询失败",response);
+        }
+    }
+
     /**
      * 验证用户是否登陆
      * 购物车中是否有采购记录

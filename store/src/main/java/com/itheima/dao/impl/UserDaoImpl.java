@@ -22,7 +22,6 @@ public class UserDaoImpl implements UserDao {
     public User login(String username, String password) throws SQLException {
         String sql = "select * from shop_user where username = ? and password = ?";
         Object[] params = {username,password};
-        User u = QR.query(sql, new BeanHandler<>(User.class), params);
-        return u;
+        return QR.query(sql, new BeanHandler<>(User.class), params);
     }
 }
