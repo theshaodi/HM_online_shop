@@ -94,7 +94,6 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
         user.setUid(UUIDUtils.getUUID());
-        System.out.println(user);
 
         boolean isRegister = US.register(user);
         if(isRegister){

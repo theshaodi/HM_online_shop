@@ -2,31 +2,7 @@ $(function(){
 	var vueOrder = new Vue({
 		el:"#orderInfoContent",
 		data:{
-			order:{
-                "oid": "000000000000000000",
-                "orderViewList": [
-                    {
-                        "count": 1,
-                        "pid": "33",
-                        "pimage": "resources/products/1/c_0033.jpg",
-                        "pname": "联想（ThinkPad） 轻薄系列E450C(20EH0001CD)TTTTTTTTTTTTT",
-                        "shop_price": 4199,
-                        "subTotal": 4199
-                    },
-                    {
-                        "count": 1,
-                        "pid": "10",
-                        "pimage": "resources/products/1/c_0010.jpg",
-                        "pname": "华为 Ascend Mate7TTTTTTTTTTTTTTT",
-                        "shop_price": 2599,
-                        "subTotal": 2599
-                    }
-                ],
-                "ordertime": "2019-05-09 12:33:58",
-                "state": 1,
-                "total": 6798,
-                "uid": "98a64e59ffee4e26a7306bdaae8c2341"
-            }
+			order:{}
 		},
 		methods:{
 			initInfoData(){
@@ -37,6 +13,13 @@ $(function(){
 						if(data.code == 1){
 							console.log(data);
 							vueOrder.order = data.obj;
+							if(data.obj.state == 1){
+								$("#name").val(data.obj.name).attr("disabled",true);
+								$("#address").val(data.obj.address).attr("disabled",true);
+								$("#telephone").val(data.obj.telephone).attr("disabled",true);
+								$("input[name='pd_FrpId']").attr("disabled",true);
+								$("#payButten").css("display","none");
+							}
 						}else if(data.code == 2){
 							alert(data.message);
 							location.href="/web/login.html";

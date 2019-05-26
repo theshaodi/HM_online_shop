@@ -6,6 +6,7 @@ import com.itheima.utils.Result;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,13 +54,19 @@ public class BaseServlet extends HttpServlet {
      */
     public boolean isLogin(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         User user = (User)request.getSession().getAttribute("user");
-        System.out.println(user);
         if( user == null){
             // 用户未登录
             Result res = new Result(Result.NOLOGIN,"尚未登录");
             response.getWriter().print(JSONObject.fromObject(res));
             return false;
         }
+        // 登陆成功后，给浏览器写入cookie
+        Cookie userCookie = new Cookie("user", user.getUsername());
+        userCookie.setPath("/");
+        userCookie.setMaxAge(60*10);
+        // 设置Cookie所属的主域名
+        userCookie.setDomain("itheimashop.com");
+        response.addCookie(userCookie);
         printResult(Result.SUCCESS,"已登陆",response);
         return true;
     }

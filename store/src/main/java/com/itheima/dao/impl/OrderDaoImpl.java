@@ -88,7 +88,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Orders> getOrdersByUid(String uid, int currentPage, int pageSize) throws SQLException {
-        String sql = "select * from orders where uid = ? limit ?,?";
+        String sql = "select * from orders where uid = ? order by ordertime desc limit ?,?";
         Object[] params = {
                 uid,
                 (currentPage - 1)*pageSize,
