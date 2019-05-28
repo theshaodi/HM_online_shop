@@ -29,6 +29,19 @@ public class OrderServlet extends BaseServlet{
 
     private OrderService OS = BeanFactory.newInstance(OrderService.class);
 
+    /**
+     * 确认收货人信息，并将订单号和订单金额传递给支付宝，将支付宝返回给我们的页面
+     * 传递给用户，用户调用支付宝支付接口，完成支付
+     * 支付宝调用return_url更新订单信息
+     * 最后跳转回订单详情页
+     * 支付宝沙箱账号:
+     * 我的:kvrbye3573@sandbox.com
+     * 老师的:cmvxpf7015@sandbox.com
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void pay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String name = request.getParameter("name");
@@ -74,6 +87,7 @@ public class OrderServlet extends BaseServlet{
         Orders orders = OS.getOrdersByOid(oid);
         if(orders.getState() == OrderConst.UN_PAID){
             AlipayWebPay.queryTrade(orders.getOid(),"");
+            orders = OS.getOrdersByOid(oid);
         }
 
         printResult(Result.SUCCESS,"订单详情查询成功",orders,response);

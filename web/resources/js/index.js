@@ -9,18 +9,19 @@ $(function(){
 		methods:{
 			initIndexData(){
 				HM.ajax("/product","method=findHostAndNewProducts",function (data,status,xhr){
+					console.log(data);
 					if(data.code == 1){
 						vueIndex.hottestList = data.obj.hostProducts;
 						vueIndex.newestList = data.obj.newProducts;
 					}else{
 						console.log(data.message);
 					}
-					
+
 				})
 			}
 		},
 		mounted:function(){
 			this.initIndexData();
 		}
-	});	
+	});
 });
