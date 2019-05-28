@@ -14,13 +14,20 @@
 	    			data:{},
 	    			methods:{
 	    				addCategory(){
-	    					console.log("admin category addCategory()....");
-	    					location.href = "/web/view/admin/category/list.html";
+								var cname = $("#cname").val();
+								console.log(cname);
+								HM.ajax("/admin","method=addCategory&cname="+cname,function(data,state,xhr){
+									if(data.code == 1){
+			    					location.href = "/web/view/admin/category/list.html";
+									}else{
+										console.log(data.message);
+									}
+								})
 						}
 	    			},
 	    		});
 	    	});
-		    
+
 	    </script>
 	</head>
 	<body>

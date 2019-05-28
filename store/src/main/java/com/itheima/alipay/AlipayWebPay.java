@@ -45,7 +45,7 @@ public class AlipayWebPay{
     public static String gatewayUrl = "";
 
     static {
-        ResourceBundle resource =  ResourceBundle.getBundle("alipay");
+        ResourceBundle resource =  ResourceBundle.getBundle("myalipay");
         app_id = resource.getString("app_id");
         merchant_private_key = resource.getString("merchant_private_key");
         alipay_public_key = resource.getString("alipay_public_key");

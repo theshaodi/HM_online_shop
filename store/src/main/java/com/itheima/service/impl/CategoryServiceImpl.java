@@ -4,6 +4,8 @@ import com.itheima.dao.CategoryDao;
 import com.itheima.domain.Category;
 import com.itheima.service.CategoryService;
 import com.itheima.utils.BeanFactory;
+import net.sf.json.JSONArray;
+import redis.clients.jedis.Jedis;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,7 +24,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAll() {
         try {
-            return CD.findAll();
+            Jedis jd = new Jedis();
+            String categorys= jd.get("categorys");
+            List<Category> categoryList = null;
+            if(categorys == null){
+                System.out.println("走数据库");
+                categoryList = CD.findAll();
+                jd.set("categorys",JSONArray.fromObject(categoryList).toString());
+                jd.close();
+            }else{
+                System.out.println("走redis");
+                JSONArray jsonArray = JSONArray.fromObject(categorys);
+                categoryList = (List) JSONArray.toCollection(jsonArray, Category.class);
+            }
+            return categoryList;
         } catch (SQLException e) {
             e.printStackTrace();
         }

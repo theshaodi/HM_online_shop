@@ -14,23 +14,39 @@
 			.cate_tr:hover{
 				background-color: white;
 			}
-			
+
 		</style>
 		<script type="text/javascript">
 			$(function(){
 				var vueCategory = new Vue({
-					el: "#cate_list",  
-					data: {			   
+					el: "#cate_list",
+					data: {
 						categoryList:[{"cid":"1","cname":"手机数码"},{"cid":"2","cname":"电脑办公"}]
 					},
-					methods: {		   
+					methods: {
 						// 初始化函数
 						initCategoryList(){
-							console.log("initCategoryList...");
+							HM.ajax("/admin","method=findAllCategory",function (data,state,xhr){
+								if(data.code == 1){
+									vueCategory.categoryList = data.obj;
+								}else{
+									console.log(data.message);
+								}
+							})
 						},
 						// 删除函数
 						deleteCategoryById(cid){
-							console.log("delete: cid:"+cid);
+							console.log(cid);
+							if(confirm("确定要删除这个商品分类吗?")){
+								HM.ajax("/admin","method=deleteCategoryByCid&cid="+cid,function(data,state,xhr){
+									if(data.code == 1){
+										console.log(data.message);
+			    					location.href = "/web/view/admin/category/list.html";
+									}else{
+										console.log(data);
+									}
+								})
+							}
 						},
 					},
 					mounted:function(){ // 生命周期函数
@@ -67,10 +83,10 @@
 								<td width="7%" >
 									操作
 								</td>
-								
+
 							 </tr>
-							 <!--
-							<template v-for="(category,index) in categoryList">				
+
+							<template v-for="(category,index) in categoryList">
 								<tr :class="{'cate_tr tr_odd':index%2!=0,'cate_tr tr_even':index%2==0}">
 									<td>
 										{{category.cid}}
@@ -84,10 +100,10 @@
 										<a @click="deleteCategoryById(category.cid)" class="a_button_del"></a>
 									</td>
 								</tr>
-							</template>		
-							-->
-							
-							<tr class="cate_tr tr_even" >
+							</template>
+
+
+							<!-- <tr class="cate_tr tr_even" >
 								<td>
 									2
 								</td>
@@ -112,8 +128,8 @@
 									&nbsp;&nbsp;
 									<a href="#" onclick="return confirm('您确定要删除吗？')" class="a_button_del"></a>
 								</td>
-							</tr>
-							
+							</tr> -->
+
 						</table>
 					</td>
 				</tr>
@@ -121,4 +137,3 @@
 		</table>
 	</body>
 </html>
-

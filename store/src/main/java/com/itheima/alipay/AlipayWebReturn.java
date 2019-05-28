@@ -4,6 +4,8 @@ package com.itheima.alipay;
 import com.itheima.common.OrderConst;
 import com.itheima.service.OrderService;
 import com.itheima.service.impl.OrderServiceImpl;
+import com.itheima.utils.BeanFactory;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +22,9 @@ import java.io.IOException;
  */
 @WebServlet("/alipay/web/return")
 public class AlipayWebReturn extends HttpServlet {
+
+    private OrderService OS = BeanFactory.newInstance(OrderService.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -32,8 +37,7 @@ public class AlipayWebReturn extends HttpServlet {
             String out_trade_no = request.getParameter("out_trade_no");
             System.out.println(out_trade_no);
             //订单状态,修改为已经付款,正式上线，改为在AlipayWebNotify中完成
-            OrderService orderService = new OrderServiceImpl();
-            if(orderService.updateOrdersStateById(out_trade_no, OrderConst.PAID)){
+            if(OS.updateOrdersStateById(out_trade_no, OrderConst.PAID)){
                 System.out.println("状态更新成功！");
             }else{
                 System.out.println("状态更新失败！");
