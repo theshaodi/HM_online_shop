@@ -1,6 +1,7 @@
 package com.itheima.service;
 
 import com.itheima.domain.Category;
+import com.itheima.exception.DeleteCategoryException;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ import java.util.List;
 public interface AdminService {
     List<Category> findAllCategory();
     boolean addCategory(String cname);
-    boolean deleteCategoryByCid(String cid);
+    boolean deleteCategoryByCid(String cid) throws DeleteCategoryException;
 }

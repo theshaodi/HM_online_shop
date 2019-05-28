@@ -1,8 +1,11 @@
 package com.itheima.service.impl;
 
 import com.itheima.dao.AdminDao;
+import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
+import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
+import com.itheima.service.ProductService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.UUIDUtils;
 import redis.clients.jedis.Jedis;
@@ -20,6 +23,7 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     private AdminDao AD = BeanFactory.newInstance(AdminDao.class);
+    private ProductDao PD = BeanFactory.newInstance(ProductDao.class);
 
     @Override
     public List<Category> findAllCategory() {
@@ -50,8 +54,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean deleteCategoryByCid(String cid) {
+    public boolean deleteCategoryByCid(String cid) throws DeleteCategoryException{
         try {
+            long l = PD.totalCountByCid(cid);
+            if(l > 0){
+                throw new DeleteCategoryException("该商品分类下包含有"+l+"个商品,无法直接删除该商品分类");
+            }
             AD.deleteCategoryById(cid);
             clearCategorysFromRedis();
             return true;

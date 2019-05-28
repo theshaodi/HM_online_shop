@@ -1,6 +1,7 @@
 package com.itheima.servlet;
 
 import com.itheima.domain.Category;
+import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.Result;
@@ -52,7 +53,13 @@ public class AdminServlet extends BaseServlet{
     public void deleteCategoryByCid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cid = request.getParameter("cid");
 
-        boolean b = AS.deleteCategoryByCid(cid);
+        boolean b = false;
+        try {
+            b = AS.deleteCategoryByCid(cid);
+        } catch (DeleteCategoryException e) {
+            printResult(Result.FAILS,e.getMessage(),response);
+            return;
+        }
         if(b)
             printResult(Result.SUCCESS,"删除商品分类成功",response);
         else
