@@ -16,4 +16,6 @@ public interface AdminService {
     List<Category> findAllCategory();
     boolean addCategory(String cname);
     boolean deleteCategoryByCid(String cid) throws DeleteCategoryException;
+    Category getCategoryByCid(String cid);
+    boolean updateCategoryByCid(Category c);
 }

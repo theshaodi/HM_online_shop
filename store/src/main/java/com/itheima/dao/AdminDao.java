@@ -19,4 +19,13 @@ public interface AdminDao {
     void addCategory(String cid,String cname) throws SQLException;
     // 根据商品分类cid删除该商品分类
     void deleteCategoryById(String cid) throws SQLException;
+    // 根据商品分类cid查询该商品分类的数据
+    Category getCategoryByCid(String cid) throws SQLException;
+
+    /**
+     * 根据cid更新某个商品分类信息
+     * @param c 由web层根据前端数据构建的Category对象
+     * @throws SQLException
+     */
+    void updateCategoryByCid(Category c) throws SQLException;
 }

@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="/web/resources/js/vue.js"></script>
 	   <script type="text/javascript">
 			$(function(){
-			    var vue = new Vue({
+			    var editCategoryVue = new Vue({
 			        el:'#editForm',
 			        data:{
 			            cname:"demo",
@@ -17,17 +17,36 @@
 			        methods:{
 			            initData(){
 			                // 获取分类ID
-							console.log("admin editCategory initData...");
+											var cid = HM.getParameter("cid");
+											console.log(cid);
+											HM.ajax("/admin","method=getCategoryByCid&cid="+cid,function(data,state,xhr){
+												if(data.code == 1){
+													editCategoryVue.cname = data.obj.cname;
+												}else{
+													console.log(data);
+												}
+											})
 			            },
 			            editCategory(){
-			            	console.log("admin editCategory editCategory...");
-						}
+											var cid = HM.getParameter("cid");
+											var cname = $("#cname").val();
+											console.log(cid);
+											console.log(cname);
+											HM.ajax("/admin","method=updateCategoryByCid&cid="+cid+"&cname="+cname,function(data, state, xhr){
+												 if(data.code == 1){
+							    					location.href = "/web/view/admin/category/list.html";
+												 }else{
+													 console.log(data);
+													 alert(data.message);
+												 }
+											})
+									}
 			        },
 			        mounted:function(){
 			            this.initData();
 			        },
 			    });
-			});	
+			});
 	   </script>
 	</head>
 	<body>
@@ -37,7 +56,7 @@
 					<td class="ta_01" align="center" bgColor="#afd1f3" colSpan="4"
 						height="26">
 						<STRONG>编辑分类</STRONG>
-						
+
 					</td>
 				</tr>
 
@@ -49,7 +68,7 @@
 						<input type="text" name="cname" id="cname" v-model="cname" class="bg"/>
 						</td>
 				</tr>
-			
+
 			    <tr>
 					<td align="center" bgColor="#f5fafe" colSpan="4">
 						<input type="button" value="保存" id="save" @click="editCategory()" />

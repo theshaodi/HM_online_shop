@@ -5,7 +5,6 @@ import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
 import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
-import com.itheima.service.ProductService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.UUIDUtils;
 import redis.clients.jedis.Jedis;
@@ -61,6 +60,28 @@ public class AdminServiceImpl implements AdminService {
                 throw new DeleteCategoryException("该商品分类下包含有"+l+"个商品,无法直接删除该商品分类");
             }
             AD.deleteCategoryById(cid);
+            clearCategorysFromRedis();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Category getCategoryByCid(String cid) {
+        try {
+            return AD.getCategoryByCid(cid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateCategoryByCid(Category c) {
+        try {
+            AD.updateCategoryByCid(c);
             clearCategorysFromRedis();
             return true;
         } catch (SQLException e) {
