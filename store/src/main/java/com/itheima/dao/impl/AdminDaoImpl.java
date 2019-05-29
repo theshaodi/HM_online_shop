@@ -2,6 +2,7 @@ package com.itheima.dao.impl;
 
 import com.itheima.dao.AdminDao;
 import com.itheima.domain.Category;
+import com.itheima.domain.User;
 import com.itheima.utils.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -63,5 +64,15 @@ public class AdminDaoImpl implements AdminDao {
                 c.getCid()
         };
         QR.update(sql,params);
+    }
+
+    @Override
+    public User loginAdmin(String uname, String password) throws SQLException {
+        String sql = "select * from admin_user where username = ? and password = ?";
+        Object[] params = {
+                uname,
+                password
+        };
+        return QR.query(sql,new BeanHandler<>(User.class),params);
     }
 }

@@ -3,6 +3,7 @@ package com.itheima.service.impl;
 import com.itheima.dao.AdminDao;
 import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
+import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
 import com.itheima.utils.BeanFactory;
@@ -88,5 +89,15 @@ public class AdminServiceImpl implements AdminService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public User loginAdmin(String uname, String password) {
+        try {
+            return AD.loginAdmin(uname,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

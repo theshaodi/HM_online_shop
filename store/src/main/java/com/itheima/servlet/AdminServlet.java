@@ -1,16 +1,19 @@
 package com.itheima.servlet;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.Result;
+import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -27,6 +30,55 @@ import java.util.Map;
 public class AdminServlet extends BaseServlet{
 
     private AdminService AS = BeanFactory.newInstance(AdminService.class);
+
+
+    /**
+     * admin账户登出
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void logOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        printResult(Result.SUCCESS,"admin成功登出",response);
+    }
+
+    public void isLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User adminuser = (User) request.getSession().getAttribute("adminuser");
+        if( adminuser == null){
+            // 用户未登录
+            Result res = new Result(Result.NOLOGIN,"尚未登录");
+            response.getWriter().print(JSONObject.fromObject(res));
+            return;
+        }
+        User user = AS.loginAdmin(adminuser.getUsername(), adminuser.getPassword());
+        if(user != null)
+            printResult(Result.SUCCESS,"已登陆admin",user,response);
+        else
+            printResult(Result.FAILS,"该账户不属于admin,请使用admin账户",response);
+    }
+
+    /**
+     * 用于后台系统登陆
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void loginAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = AS.loginAdmin(username, password);
+        if(user != null){
+            request.getSession().setAttribute("adminuser",user);
+            printResult(Result.SUCCESS,"admin登陆成功",user,response);
+        }else{
+            printResult(Result.FAILS,"登陆失败",response);
+        }
+    }
 
     /**
      * 根据cid更新某个商品分类信息

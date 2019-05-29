@@ -21,7 +21,7 @@
 				var vueCategory = new Vue({
 					el: "#cate_list",
 					data: {
-						categoryList:[{"cid":"1","cname":"手机数码"},{"cid":"2","cname":"电脑办公"}]
+						categoryList:[]
 					},
 					methods: {
 						// 初始化函数
@@ -49,10 +49,21 @@
 								})
 							}
 						},
+						verifyIsLogin(){
+							HM.ajax("/admin","method=isLogin",function (data,state,xhr){
+								if(data.code == 1){
+									vueCategory.initCategoryList();
+									cnosole.log(data.message)
+								}else{
+									console.log(data);
+									$("body").html("未登录");
+								}
+							})
+						},
 					},
 					mounted:function(){ // 生命周期函数
 						// 初始化数据
-						this.initCategoryList();
+						this.verifyIsLogin();
 					}
 				});
 			});

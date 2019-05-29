@@ -1,6 +1,7 @@
 package com.itheima.service;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface AdminService {
     boolean deleteCategoryByCid(String cid) throws DeleteCategoryException;
     Category getCategoryByCid(String cid);
     boolean updateCategoryByCid(Category c);
+    User loginAdmin(String uname,String password);
 }

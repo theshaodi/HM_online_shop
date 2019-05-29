@@ -52,13 +52,13 @@ public class BaseServlet extends HttpServlet {
     /**
      * 公共方法，判断是否已登录
      */
-    public boolean isLogin(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+    public void isLogin(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         User user = (User)request.getSession().getAttribute("user");
         if( user == null){
             // 用户未登录
             Result res = new Result(Result.NOLOGIN,"尚未登录");
             response.getWriter().print(JSONObject.fromObject(res));
-            return false;
+            return;
         }
         // 登陆成功后，给浏览器写入cookie
         Cookie userCookie = new Cookie("user", user.getUsername());
@@ -68,7 +68,6 @@ public class BaseServlet extends HttpServlet {
         userCookie.setDomain("itheimashop.com");
         response.addCookie(userCookie);
         printResult(Result.SUCCESS,"已登陆",response);
-        return true;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.itheima.dao;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,4 +29,6 @@ public interface AdminDao {
      * @throws SQLException
      */
     void updateCategoryByCid(Category c) throws SQLException;
+
+    User loginAdmin(String uname,String password) throws SQLException;
 }

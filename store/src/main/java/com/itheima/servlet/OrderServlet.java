@@ -48,10 +48,6 @@ public class OrderServlet extends BaseServlet{
         String address = request.getParameter("address");
         String telephone = request.getParameter("telephone");
         String oid = request.getParameter("oid");
-        System.out.println(oid);
-        System.out.println(name);
-        System.out.println(address);
-        System.out.println(telephone);
 
         OS.updateOrdersNameAddrTel(oid,name,address,telephone);
         String webPayBody = null;
