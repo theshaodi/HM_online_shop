@@ -3,12 +3,15 @@ package com.itheima.service.impl;
 import com.itheima.dao.AdminDao;
 import com.itheima.dao.ProductDao;
 import com.itheima.domain.Category;
+import com.itheima.domain.PageBean;
+import com.itheima.domain.Product;
 import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.UUIDUtils;
 import redis.clients.jedis.Jedis;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -100,4 +103,49 @@ public class AdminServiceImpl implements AdminService {
         }
         return null;
     }
+
+    /**
+     * 分页查询商品按时间倒序排列
+     *
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageBean<Product> findProductsByPage(int currentPage, int pageSize) {
+        PageBean<Product> ppb = new PageBean<>();
+
+        try {
+            Long productCount = AD.getProductCount();
+            List<Product> products = AD.findProductsByPage(currentPage, pageSize);
+            int totalPage = (int) Math.ceil(((double) productCount) / pageSize);
+            ppb.setTotalPage(totalPage);
+            ppb.setCurrentPage(currentPage);
+            ppb.setList(products);
+            ppb.setPageSize(pageSize);
+            ppb.setTotalCount(productCount);
+            return ppb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 向数据库中添加商品
+     *
+     * @param product 封装好的商品对象
+     * @return 成功添加进数据库返回true, 否则返回false
+     */
+    @Override
+    public boolean addProduct(Product product) {
+        try {
+            AD.addProduct(product);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

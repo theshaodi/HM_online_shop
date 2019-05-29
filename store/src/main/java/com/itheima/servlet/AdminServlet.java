@@ -1,6 +1,9 @@
 package com.itheima.servlet;
 
+import com.itheima.common.ProductConst;
 import com.itheima.domain.Category;
+import com.itheima.domain.PageBean;
+import com.itheima.domain.Product;
 import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
 import com.itheima.service.AdminService;
@@ -31,6 +34,24 @@ public class AdminServlet extends BaseServlet{
 
     private AdminService AS = BeanFactory.newInstance(AdminService.class);
 
+    /**
+     * admin后端分页查询商品数据
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void getProductsByPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String currentPage = request.getParameter("currentPage");
+        if(currentPage == null || "".equals(currentPage) || "null".equals(currentPage))
+            currentPage = "1";
+        PageBean<Product> ppb = AS.findProductsByPage(Integer.parseInt(currentPage), ProductConst.PAGE_SIZE);
+        if(ppb != null)
+            printResult(Result.SUCCESS,"分页查询商品信息成功",ppb,response);
+        else
+            printResult(Result.FAILS,"分页查询商品信息失败",response);
+    }
 
     /**
      * admin账户登出
@@ -105,6 +126,7 @@ public class AdminServlet extends BaseServlet{
         else
             printResult(Result.FAILS,"更新商品分类失败",response);
     }
+
     /**
      * 按商品分类cid查询该商品分类
      * @param request

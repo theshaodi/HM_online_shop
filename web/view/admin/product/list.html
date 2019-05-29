@@ -16,7 +16,7 @@
 			.prod_tr:hover{
 				background-color: white;
 			}
-			
+
 		</style>
 		<script type="text/javascript">
 			$(function(){
@@ -24,47 +24,38 @@
 				var vueProductList = new Vue({
 					el:"#plist",
 					data:{
-						 pageBean:{
-					        "currentPage": 1,
-					        "list": [
-					            {
-					                "cid": "1",
-					                "is_hot": 0,
-					                "market_price": 1499,
-					                "pdate": "2015-11-14 00:00:00.0",
-					                "pdesc": "TTTT卡双待新品火爆抢购中！",
-					                "pflag": 0,
-					                "pid": "7",
-					                "pimage": "resources/products/1/c_0007.jpg",
-					                "pname": "TTTTT三星 Galaxy On7",
-					                "shop_price": 1398
-					            },
-					            {
-					                "cid": "2",
-					                "is_hot": 0,
-					                "market_price": 2399,
-					                "pdate": "2015-11-12 00:00:00.0",
-					                "pdesc": "（9.7英寸 16G WLAN 机型 银色）",
-					                "pflag": 0,
-					                "pid": "50",
-					                "pimage": "resources/products/1/c_0050.jpg",
-					                "pname": "TTTTTTApple iPad Air 2 MGLW2CH/A",
-					                "shop_price": 2299
-					            }
-					         ],
-					        "pageSize": 10,
-					        "totalCount": 50,
-					        "totalPage": 5
-						},
+						 pageBean:{},
 					},
 					methods:{
 						initProductData(){
-							console.log("initProductData...");
-							
-						}
+							var currentPage = HM.getParameter("currentPage");
+							if(currentPage == null){
+								currentPage = 1;
+							}
+							HM.ajax("/admin","method=getProductsByPage&currentPage="+currentPage,function(data,state,xhr){
+								if(data.code == 1){
+									vueProductList.pageBean = data.obj;
+									var pageHtml = HM.page(data.obj,"/web/view/admin/product/list.html");
+									$("#page").html(pageHtml);
+								}else{
+									console.log(data);
+								}
+							})
+						},
+						verifyIsLogin(){
+							HM.ajax("/admin","method=isLogin",function (data,state,xhr){
+								if(data.code == 1){
+									vueProductList.initProductData();
+									cnosole.log(data.message)
+								}else{
+									console.log(data);
+									$("body").html("未登录");
+								}
+							})
+						},
 					},
 					mounted:function(){
-						this.initProductData();
+						this.verifyIsLogin();
 					}
 				});
 			});
@@ -105,9 +96,9 @@
 									<td  >
 										商品图片
 									</td>
-									
+
 								</tr>
-								<!--
+
 								<template v-for="(product,index) in pageBean.list"  >
 									<tr :class="{'tr_odd prod_tr':index%2!=0,'tr_even prod_tr':index%2==0}">
 										<td >
@@ -130,229 +121,8 @@
 										</td>
 									</tr>
 								</template>
-								-->
-								
-								<tr class="tr_odd prod_tr">
-									<td >
-										1
-									</td>
-									<td >
-										小米4c
-									</td>
-									<td align="left" >
-										小米4c手机性能好价格低啊小米4c手机性能好价格低啊小米4c手机性能好价格低啊小米4c手性能好价格低啊
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0001.jpg">
-									</td>
-								</tr>
-								<tr class="tr_even prod_tr">
-									<td >
-										2
-									</td>
-									<td >
-										华为Mate7
-									</td>
-									<td align="left" >
-										华为 Ascend Mate7 月光银 移动4G手机 双卡双待双通6英寸高清大屏，纤薄机身，智能超八核，按压式指纹识别！!选择下方“移动老用户4G飞享合约”，无需换号，还有话费每月返还！
-									</td>
-									<td >
-										2599
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0002.jpg">
-									</td>
-								</tr>
-								<tr class="tr_odd prod_tr">
-									<td >
-										3
-									</td>
-									<td >
-										vivo20s
-									</td>
-									<td align="left" >
-										移动联通双4G手机 3G运存版 极光白【购机送蓝牙耳机+蓝牙自拍杆】新升级3G运行内存·双2.5D弧面玻璃·眼球识别技术
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0003.jpg">
-									</td>
-								</tr>
-								<tr class="tr_even prod_tr">
-									<td >
-										2
-									</td>
-									<td >
-										华为Mate7
-									</td>
-									<td align="left" >
-										华为 Ascend Mate7 月光银 移动4G手机 双卡双待双通6英寸高清大屏，纤薄机身，智能超八核，按压式指纹识别！!选择下方“移动老用户4G飞享合约”，无需换号，还有话费每月返还！
-									</td>
-									<td >
-										2599
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0002.jpg">
-									</td>
-								</tr>
-								<tr class="tr_odd prod_tr">
-									<td >
-										3
-									</td>
-									<td >
-										vivo20s
-									</td>
-									<td align="left" >
-										移动联通双4G手机 3G运存版 极光白【购机送蓝牙耳机+蓝牙自拍杆】新升级3G运行内存·双2.5D弧面玻璃·眼球识别技术
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0003.jpg">
-									</td>
-								</tr>
-								<tr class="tr_even prod_tr">
-									<td >
-										2
-									</td>
-									<td >
-										华为Mate7
-									</td>
-									<td align="left" >
-										华为 Ascend Mate7 月光银 移动4G手机 双卡双待双通6英寸高清大屏，纤薄机身，智能超八核，按压式指纹识别！!选择下方“移动老用户4G飞享合约”，无需换号，还有话费每月返还！
-									</td>
-									<td >
-										2599
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0002.jpg">
-									</td>
-								</tr>
-								<tr class="tr_odd prod_tr">
-									<td >
-										3
-									</td>
-									<td >
-										vivo20s
-									</td>
-									<td align="left" >
-										移动联通双4G手机 3G运存版 极光白【购机送蓝牙耳机+蓝牙自拍杆】新升级3G运行内存·双2.5D弧面玻璃·眼球识别技术
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0003.jpg">
-									</td>
-								</tr>
-								<tr class="tr_even prod_tr">
-									<td >
-										2
-									</td>
-									<td >
-										华为Mate7
-									</td>
-									<td align="left" >
-										华为 Ascend Mate7 月光银 移动4G手机 双卡双待双通6英寸高清大屏，纤薄机身，智能超八核，按压式指纹识别！!选择下方“移动老用户4G飞享合约”，无需换号，还有话费每月返还！
-									</td>
-									<td >
-										2599
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0002.jpg">
-									</td>
-								</tr>
-								<tr class="tr_odd prod_tr">
-									<td >
-										3
-									</td>
-									<td >
-										vivo20s
-									</td>
-									<td align="left" >
-										移动联通双4G手机 3G运存版 极光白【购机送蓝牙耳机+蓝牙自拍杆】新升级3G运行内存·双2.5D弧面玻璃·眼球识别技术
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0003.jpg">
-									</td>
-								</tr>
-								<tr class="tr_even prod_tr">
-									<td >
-										2
-									</td>
-									<td >
-										华为Mate7
-									</td>
-									<td align="left" >
-										华为 Ascend Mate7 月光银 移动4G手机 双卡双待双通6英寸高清大屏，纤薄机身，智能超八核，按压式指纹识别！!选择下方“移动老用户4G飞享合约”，无需换号，还有话费每月返还！
-									</td>
-									<td >
-										2599
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0002.jpg">
-									</td>
-								</tr>
-								<tr class="tr_odd prod_tr">
-									<td >
-										3
-									</td>
-									<td >
-										vivo20s
-									</td>
-									<td align="left" >
-										移动联通双4G手机 3G运存版 极光白【购机送蓝牙耳机+蓝牙自拍杆】新升级3G运行内存·双2.5D弧面玻璃·眼球识别技术
-									</td>
-									<td >
-										1799
-									</td>
-									<td >
-											是
-									</td>
-									<td >
-										<img width="40" src="/web/resources/products/1/c_0003.jpg">
-									</td>
-								</tr>
-								
+
+
 							</table>
 						</td>
 					</tr>
@@ -360,7 +130,7 @@
 						<td colspan="7">
 								<nav aria-label="Page navigation">
 								  <ul class="pagination" id="page">
-								  	
+
 								    <li class="disabled">
 								      <a href="#" aria-label="Previous">
 								        <span aria-hidden="true">&laquo;</span>
@@ -376,7 +146,7 @@
 								        <span aria-hidden="true">&raquo;</span>
 								      </a>
 								    </li>
-								   
+
 								  </ul>
 								</nav>
 						</td>

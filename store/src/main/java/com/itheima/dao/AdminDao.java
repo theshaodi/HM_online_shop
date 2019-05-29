@@ -1,6 +1,7 @@
 package com.itheima.dao;
 
 import com.itheima.domain.Category;
+import com.itheima.domain.Product;
 import com.itheima.domain.User;
 
 import java.sql.SQLException;
@@ -31,4 +32,16 @@ public interface AdminDao {
     void updateCategoryByCid(Category c) throws SQLException;
 
     User loginAdmin(String uname,String password) throws SQLException;
+
+    /**
+     * 分页查询所有商品并按时间倒序排列
+     * @param currentPage 当前页码
+     * @param pageSize 每页展示的商品个数
+     * @return 返回每页包含的商品列表
+     * @throws SQLException
+     */
+    List<Product> findProductsByPage(int currentPage,int pageSize) throws SQLException;
+    Long getProductCount() throws SQLException;
+
+    void addProduct(Product product) throws SQLException;
 }
