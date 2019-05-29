@@ -14,25 +14,49 @@
 				var vueProduct = new Vue({
 					el:"#productForm",
 					data:{
-						categoryList:[{"cid":"1","cname":"手机数码"},{"cid":"2","cname":"电脑办公"}]
+						categoryList:[]
 					},
 					methods:{
 						initProductData(){
 							 // 获取下拉列表数据
-						   	console.log("initProductData.....");
+							 HM.ajax("/category","method=findAll",function(data,state,xhr){
+								 if(data.code == 1){
+									 vueProduct.categoryList = data.obj;
+								 }else{
+									 console.log(data);
+								 }
+							 })
 						},
 						addProduct(){
-							console.log("addProductData.....");
-						}
+							HM.ajaxFile("/fileuploadAndproduct","productForm",function(data,state,xhr){
+								if(data.code == 1){
+									location.href = "/web/view/admin/product/list.html";
+								}else{
+									console.log(data);
+									alert(data.message);
+								}
+							})
+						},
+						verifyIsLogin(){
+							HM.ajax("/admin","method=isLogin",function (data,state,xhr){
+								if(data.code == 1){
+									vueProduct.initProductData();
+									console.log(data.message)
+								}else{
+									console.log(data);
+									$("body").html("未登录");
+								}
+							})
+						},
 					},
 					mounted:function(){
-						this.initProductData();
+						this.verifyIsLogin();
 					}
-					
+
 				});
 			});
-			
-					
+
+
 		</script>
 	</head>
 	<body>
@@ -94,13 +118,13 @@
 						所属的分类：
 					</td>
 					<td  bgColor="#ffffff" colspan="3">
-						<select name="cid" id="cid">				
+						<select name="cid" id="cid">
 							<option value="">--请选择--</option>
-							<!--
+
 							<template v-for="category in categoryList">
 								<option :value="category.cid">{{category.cname}}</option>
 							</template>
-							-->
+
 						</select>
 					</td>
 				</tr>

@@ -88,7 +88,7 @@ public class AdminDaoImpl implements AdminDao {
     public List<Product> findProductsByPage(int currentPage, int pageSize) throws SQLException {
         String sql = "select * from product order by pdate desc limit ?,?";
         Object[] params = {
-                currentPage,
+                (currentPage-1)*pageSize,
                 pageSize
         };
         return QR.query(sql,new BeanListHandler<>(Product.class),params);

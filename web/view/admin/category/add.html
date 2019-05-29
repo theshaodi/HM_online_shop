@@ -27,7 +27,7 @@
 							verifyIsLogin(){
 								HM.ajax("/admin","method=isLogin",function (data,state,xhr){
 									if(data.code == 1){
-										cnosole.log(data.message)
+										console.log(data.message)
 									}else{
 										console.log(data);
 										$("#addCategoryForm").html("未登录");

@@ -46,7 +46,7 @@
 							HM.ajax("/admin","method=isLogin",function (data,state,xhr){
 								if(data.code == 1){
 									vueProductList.initProductData();
-									cnosole.log(data.message)
+									console.log(data.message)
 								}else{
 									console.log(data);
 									$("body").html("未登录");
