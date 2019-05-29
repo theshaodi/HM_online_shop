@@ -6,6 +6,8 @@ import com.itheima.domain.PageBean;
 import com.itheima.domain.Product;
 import com.itheima.domain.User;
 import com.itheima.exception.DeleteCategoryException;
+import com.itheima.proxy.DynamicProxyFactory;
+import com.itheima.proxy.TimeInvocationHandler;
 import com.itheima.service.AdminService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.Result;
@@ -32,7 +34,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/admin")
 public class AdminServlet extends BaseServlet{
 
-    private AdminService AS = BeanFactory.newInstance(AdminService.class);
+    private AdminService AS_Bean = BeanFactory.newInstance(AdminService.class);
+    private AdminService AS = (AdminService) DynamicProxyFactory.getDynamicProxy(AS_Bean,new TimeInvocationHandler(AS_Bean));
 
     /**
      * admin后端分页查询商品数据
