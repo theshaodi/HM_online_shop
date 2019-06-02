@@ -18,7 +18,7 @@
         setInterval(function(){
             num--;
             if(num<1){
-                location.href="http://www.itheimashop.com:8020/web/view/order/info.html?oid=${oid}";
+                location.href="http://madai.site/web/view/order/info.html?oid=${oid}";
             }else{
                 document.getElementById("time").innerHTML=num;
             }

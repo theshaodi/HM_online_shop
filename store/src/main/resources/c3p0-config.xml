@@ -5,11 +5,11 @@
 	         property标签,配置数据库连接四大信息 
 	         name属性,要配置什么,标签体,配置的实际内容
 	    -->
-		<property name="driverClass">com.mysql.cj.jdbc.Driver</property>
+		<property name="driverClass">com.mysql.jdbc.Driver</property>
 		<!--<property name="driverClass">com.mysql.jdbc.Driver</property>-->
 		<property name="jdbcUrl">jdbc:mysql://localhost:3306/itheima_shop?characterEncoding=utf8</property>
 		<property name="user">root</property>
-		<property name="password">105889</property>
+		<property name="password">mysql</property>
 	</default-config>
 	
 </c3p0-config> 

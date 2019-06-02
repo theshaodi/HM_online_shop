@@ -65,7 +65,7 @@ public class BaseServlet extends HttpServlet {
         userCookie.setPath("/");
         userCookie.setMaxAge(60*10);
         // 设置Cookie所属的主域名
-        userCookie.setDomain("itheimashop.com");
+        userCookie.setDomain("madai.site");
         response.addCookie(userCookie);
         printResult(Result.SUCCESS,"已登陆",response);
     }
