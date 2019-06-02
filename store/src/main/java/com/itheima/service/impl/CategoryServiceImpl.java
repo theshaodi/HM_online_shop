@@ -24,24 +24,25 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findAll() {
+        Jedis jd = RedisUtils.getJedis();
         try {
-            Jedis jd = RedisUtils.getJedis();
             String categorys= jd.get("categorys");
             List<Category> categoryList = null;
             if(categorys == null){
                 System.out.println("走数据库");
                 categoryList = CD.findAll();
                 jd.set("categorys",JSONArray.fromObject(categoryList).toString());
-                jd.close();
             }else{
                 System.out.println("走redis");
                 JSONArray jsonArray = JSONArray.fromObject(categorys);
                 categoryList = (List) JSONArray.toCollection(jsonArray, Category.class);
             }
+            jd.close();
             return categoryList;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        jd.close();
         return null;
     }
 }
