@@ -20,6 +20,7 @@ public class RedisUtils {
         ResourceBundle bundle = ResourceBundle.getBundle("redisdb");
         // 解析  获取ip
         String host = bundle.getString("host");
+        String passwd = bundle.getString("password");
         int port = Integer.parseInt(bundle.getString("port"));
         int maxTotal = Integer.parseInt(bundle.getString("maxTotal"));
         int maxIdle = Integer.parseInt(bundle.getString("maxIdle"));
@@ -31,11 +32,18 @@ public class RedisUtils {
         config.setMaxIdle(maxIdle);
 
         //3:创建连接池对象
-        pool = new JedisPool(config, host, port);
+        if("".equals(passwd))
+            pool = new JedisPool(config, host, port);
+        else
+            pool = new JedisPool(config, host, port, 10, passwd);
     }
 
     public static Jedis getJedis(){
-
         return pool.getResource();
+    }
+
+    public static void main(String[] args) {
+        Jedis jedis = RedisUtils.getJedis();
+        System.out.println(jedis);
     }
 }

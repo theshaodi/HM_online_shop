@@ -4,6 +4,7 @@ import com.itheima.dao.CategoryDao;
 import com.itheima.domain.Category;
 import com.itheima.service.CategoryService;
 import com.itheima.utils.BeanFactory;
+import com.itheima.utils.RedisUtils;
 import net.sf.json.JSONArray;
 import redis.clients.jedis.Jedis;
 
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAll() {
         try {
-            Jedis jd = new Jedis();
+            Jedis jd = RedisUtils.getJedis();
             String categorys= jd.get("categorys");
             List<Category> categoryList = null;
             if(categorys == null){
